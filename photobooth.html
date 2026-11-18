@@ -33,20 +33,20 @@
     <a class="btn alt" href="#tutorial">How it works</a>
   </div>
   <div class="feats">
-    <div class="panel"><h3>🎀 No app, no sign up &amp; free</h3><p>No account needed, just snap, decorate, and download. Completely free!</p></div>
-    <div class="panel"><h3>🔒 Save privacy</h3><p>All photos are processed in your browser, so nothing is ever uploaded or stored on servers</p></div>
-    <div class="panel"><h3>🌸 Make your own strip</h3><p>Choose your strip layout, frame shape, and color, then decorate with emojis</p></div>
+    <article class="step" tabindex="0"><span></span><div class="ico"></div><h3>💸 No app, no sign up &amp; free</h3><p>No account needed, just snap, decorate and download. Completely free!</p></article>
+    <article class="step" tabindex="0"><span></span><div class="ico"></div><h3>🔒 Save privacy</h3><p>All photos are processed in your browser, so nothing is ever uploaded or stored on servers</p></article>
+    <article class="step" tabindex="0"><span></span><div class="ico"></div><h3>🌸 Make your own strip</h3><p>Choose your strip layout, frame shape, and color, then decorate with emojis</p></article>
   </div>
 </section>
 
 <section class="view" id="view-tutorial" hidden>
   <h1>How it Works?</h1>
   <div class="steps">
-    <article class="step" tabindex="0"><span class="num">1</span><div class="ico">🎞️</div><h3>Choose strip</h3><p>Di menu <b>take snap!</b>, pilih bentuk strip (memanjang, 2 x 2, atau ke samping) dan bentuk frame foto.</p></article>
-    <article class="step" tabindex="0"><span class="num">2</span><div class="ico">📷</div><h3>Turn on camera</h3><p>Klik <b>Nyalakan kamera</b>, lalu izinkan akses kamera di browser. Pilih filter kalau mau.</p></article>
+    <article class="step" tabindex="0"><span class="num">1</span><div class="ico">📷</div><h3>Turn on camera</h3><p>Klik <b>Nyalakan kamera</b>, lalu izinkan akses kamera di browser. Pilih filter, atur flash dan atur tingkat blur kamera.</p></article>
     <article class="step" tabindex="0"><span class="num">3</span><div class="ico">⏱️</div><h3>Start snapping</h3><p>Klik <b>Mulai foto</b>. Ada hitung mundur 5 detik tiap foto, dan kamu bisa mengulang foto yang kurang bagus.</p></article>
+    <article class="step" tabindex="0"><span class="num">2</span><div class="ico">🎞️</div><h3>Choose strip</h3><p>Pilih bentuk strip (memanjang, 2 x 2, atau ke samping) dan bentuk frame foto.</p></article>
     <article class="step" tabindex="0"><span class="num">4</span><div class="ico">💖</div><h3>Decorate your strip</h3><p>Buka <b>make your layout</b>: pilih warna bingkai, tulis teks di bawah strip, dan tambahkan emoji.</p></article>
-    <article class="step" tabindex="0"><span class="num">5</span><div class="ico">⬇️</div><h3>Download the result</h3><p>Klik <b>Simpan strip</b> dan hasilnya terunduh sebagai gambar PNG.</p></article>
+    <article class="step" tabindex="0"><span class="num">5</span><div class="ico">⬇️</div><h3>Download the result</h3><p>Klik <b>Download</b> dan hasil foto mu akan terunduh sebagai gambar PNG.</p></article>
   </div>
 </section>
 
@@ -87,13 +87,13 @@
         <div class="chips" id="filters"></div>
       </div>
       <div class="panel">
-        <h3><label for="smooth">Camera smooth</label></h3>
+        <h3><label for="smooth">Camera blur</label></h3>
         <input type="range" id="smooth" min="0" max="100" value="40" style="width:100%">
       </div>
     </div>
   </div>
   <div class="row" style="justify-content:center;margin-top:24px">
-    <a class="btn" href="#layout">Decorate strip →</a>
+    <a class="btn" href="#layout">Next →</a>
   </div>
 </section>
 
@@ -114,7 +114,7 @@
         <input type="text" id="cap" maxlength="22" value="Custom strip">
       </div>
       <div class="panel">
-        <h3>Emoji</h3>
+        <h3>Emoji | click emoji and drag</h3>
         <div class="emos" id="emos"></div>
         <div class="row" style="margin-top:12px">
           <button class="chip" id="undoEmo">Undo</button>
@@ -122,8 +122,8 @@
         </div>
       </div>
       <div class="row">
-        <button class="btn" id="save" disabled>Simpan strip</button>
-        <button class="btn alt" id="reset" disabled>Ulangi foto</button>
+        <button class="btn" id="save" disabled>Download</button>
+        <button class="btn alt" id="reset" disabled>Take more photos</button>
       </div>
     </div>
   </div>
@@ -147,8 +147,8 @@
 </main>
 
 <script>
-var FILTERS={"Normal":"none","BnW":"grayscale(1) contrast(1.1)","Old":"sepia(.7) contrast(1.1) saturate(1.2)","Glow":"brightness(1.1) saturate(1.4)","Pink":"sepia(.3) hue-rotate(300deg) saturate(1.6)","Korean soft":"brightness(1.15) contrast(.88) saturate(1.05) sepia(.1) blur(.6px)","Korean glow":"brightness(1.18) contrast(.9) saturate(1.2) sepia(.12) hue-rotate(-10deg)"};
-var FRAMES=[{c:"#ffffff",t:"#8F7073"},{c:"#ffd3e6",t:"#9f6066"},{c:"#e4b2a7",t:"#ffffff"},{c:"#ff9ec7",t:"#55001C"},{c:"#b3b3ff",t:"#2b1a45"},{c:"#2b1a45",t:"#ffffff"},{c:"#000000",t:"#ffffff"},{c:"#ff2c2c",t:"#9f6066"},{c:"#adebb3",t:"#ffffff"}];
+var FILTERS={"Natural glow":"brightness(1.08) contrast(.95) saturate(1.12) sepia(.05)","Normal":"none","BnW":"grayscale(1) contrast(1.1)","Old":"sepia(.7) contrast(1.1) saturate(1.2)","Contrast":"brightness(1.1) saturate(1.4)","Pink":"sepia(.3) hue-rotate(300deg) saturate(1.6)","Soft":"brightness(1.15) contrast(.88) saturate(1.05) sepia(.1) blur(.6px)","Korean glow":"brightness(1.18) contrast(.9) saturate(1.2) sepia(.12) hue-rotate(-10deg)"};
+var FRAMES=[{c:"#ffffff",t:"#8F7073"},{c:"#fff9d6",t:"#e4d593"},{c:"#ffd3e6",t:"#9f6066"},{c:"#ffced8",t:"#ac3b60"},{c:"#c599b6",t:"#ffffff"},{c:"#bd4444",t:"#55001C"},{c:"#e4b2a7",t:"#ffffff"},{c:"#d5e8e6",t:"#626879"},{c:"#c8dfdb",t:"#5c677e"},{c:"#c7d3c0",t:"#585757"},{c:"#bfc6c4",t:"#ffffff"},{c:"#555879",t:"#ffffff"},{c:"#2b1a45",t:"#ffffff"},{c:"#000000",t:"#ffffff"},{c:"#ff2c2c",t:"#882d36"},{c:"#adebb3",t:"#ffffff"},{c:"#659287",t:"#ffffff"},{c:"#a98b76",t:"#ffffff"}];
 var N=4,SECONDS=5,SW=640,SH=480;
 
 function mk(name,W,H,cw,ch,pos,cf,cy,df,dy){
@@ -165,12 +165,17 @@ var video=$("video"),video2=$("video2"),smooth=$("smooth"),strip=$("strip"),ctx=
 var msg=$("msg"),count=$("count"),flash=$("flash"),statusEl=$("status");
 var result=$("result"),resultImg=$("resultImg"),nextBtn=$("next"),retakeBtn=$("retake");
 var shootBtn=$("shoot"),saveBtn=$("save"),resetBtn=$("reset"),camBtn=$("startCam"),cap=$("cap");
-var curFilter="Normal",curFrame=0,curLayout=0,shots=[],busy=false;
+var curFilter="Natural glow",curFrame=0,curLayout=0,shots=[],busy=false;
 
 function level(){return smooth.value/100*0.8}
-function blurred(px){var f=FILTERS[curFilter];return (f==="none"?"":f+" ")+"blur("+px+"px)"}
+var autoB=1;
+function base(){
+  var f=FILTERS[curFilter],a=autoB>1.02?"brightness("+autoB.toFixed(2)+")":"";
+  return f==="none"?(a||"none"):(a?a+" ":"")+f;
+}
+function blurred(px){var f=base();return (f==="none"?"":f+" ")+"blur("+px+"px)"}
 function applyLook(){
-  video.style.filter=FILTERS[curFilter];
+  video.style.filter=base();
   video2.style.filter=blurred(2.5);
   video2.style.opacity=level();
 }
@@ -275,7 +280,14 @@ camBtn.onclick=function(){
   navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:{ideal:1920},height:{ideal:1080},frameRate:{ideal:30}},audio:false}).then(function(s){
     video.srcObject=s;video2.srcObject=s;
     var t=s.getVideoTracks()[0];
-    if(t&&t.applyConstraints){t.applyConstraints({advanced:[{exposureMode:"continuous"},{whiteBalanceMode:"continuous"}]}).catch(function(){})}
+    if(t&&t.getCapabilities&&t.applyConstraints){
+      var caps=t.getCapabilities(),adv={};
+      ["focusMode","exposureMode","whiteBalanceMode"].forEach(function(k){
+        if(caps[k]&&caps[k].indexOf("continuous")>-1)adv[k]="continuous";
+      });
+      if(caps.exposureCompensation)adv.exposureCompensation=Math.min(caps.exposureCompensation.max,0.5);
+      t.applyConstraints({advanced:[adv]}).catch(function(){});
+    }
     msg.hidden=true;camBtn.hidden=true;shootBtn.hidden=false;
   }).catch(function(){
     msg.hidden=false;msg.textContent="Kamera tidak bisa diakses. Klik ikon gembok di address bar, izinkan Kamera, lalu muat ulang halaman.";
@@ -286,7 +298,7 @@ function snap(){
   var vw=video.videoWidth,vh=video.videoHeight,r=SW/SH,sw=vw,sh=vw/r;
   if(sh>vh){sh=vh;sw=vh*r}
   var c=document.createElement("canvas");c.width=SW;c.height=SH;
-  var x=c.getContext("2d");x.filter=FILTERS[curFilter];
+  var x=c.getContext("2d");x.filter=base();
   x.translate(SW,0);x.scale(-1,1);
   x.drawImage(video,(vw-sw)/2,(vh-sh)/2,sw,sh,0,0,SW,SH);
   if(level()>0){
@@ -348,7 +360,7 @@ saveBtn.onclick=function(){
 };
 
 var STK=[],drag=null;
-var EMOJIS=["❤️","💖","💕","✨","⭐","🌟","🎀","🌸","🌼","🌈","☁️","🦋","🍒","🍓","🍀","🐰","🐻","🐱","🐶","🐥","😎","🥰","😍","🤪","🎉","🎈","🎵","💋","🔥","💎","👑","✨"];
+var EMOJIS=["❤️","💖","💕","✨","⭐","🌟","🎀","🌸","🌼","🌈","☁️","🦋","🍒","🍓","🍀","🐰","🐻","🐱","🐶","🐥","😎","🥰","😍","🤪","🎉","🎈","🎵","💋","🔥","💎","👑","👀","🤬","🙏","💬","💭","🎬","📸","🎥","⚠️","💢","💤","🎤","🗿","⁉️","🧸","🚫","🏴‍☠️","🎧","🎸","🥁","🤍","🤎","🧢","🐦","💕"];
 EMOJIS.forEach(function(e){
   var b=document.createElement("button");b.className="emo";b.textContent=e;b.setAttribute("aria-label","Tambah emoji "+e);
   b.onclick=function(){STK.push({e:e,x:.12+Math.random()*.76,y:.1+Math.random()*.8});draw()};
@@ -395,6 +407,18 @@ $("sform").onsubmit=function(e){
 };
 
 route();
+var probe=document.createElement("canvas");probe.width=32;probe.height=24;
+setInterval(function(){
+  if(!video.videoWidth)return;
+  var p=probe.getContext("2d",{willReadFrequently:true});
+  p.drawImage(video,0,0,32,24);
+  var d=p.getImageData(0,0,32,24).data,s=0;
+  for(var i=0;i<d.length;i+=4)s+=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+  var avg=s/(d.length/4);
+  var target=Math.max(1,Math.min(1.6,125/Math.max(avg,40)));
+  autoB+=(target-autoB)*0.3;
+  applyLook();
+},800);
 
 applyLook();
 draw();
