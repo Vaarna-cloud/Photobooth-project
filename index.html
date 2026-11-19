@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photobooth</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+  <div id="screenFlash" class="screen-flash" hidden></div>
+<header class="site-header">
+  <nav class="navbar">
+    <a href="#home" class="brand">Smile n Snap!</a>
+    <ul class="menu" id="menu">
+      <li><a href="#home" data-view="home">home</a></li>
+      <li><a href="#tutorial" data-view="tutorial">tutorial</a></li>
+      <li><a href="#snap" data-view="snap">take snap!</a></li>
+      <li><a href="#layout" data-view="layout">make your layout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="wrap">
+
+<section class="view" id="view-home">
+  <p class="eyebrow">✨ FREE | ONLINE PHOTOBOOTH </p>
+  <h1 class="big">Smile n Snap!</h1>
+  <p class="hero-text">Take your own photos from anywhere, anytime. Strike a pose, pick your favorite layout, decorate it with cute emojis, and keep the memories forever. No app, no sign up, just you, your camera, and a few fun poses.✨</p>
+  <div class="row">
+    <a class="btn" href="#snap">Start snapping</a>
+    <a class="btn alt" href="#tutorial">How it works</a>
+  </div>
+  <div class="feats">
+    <article class="step" tabindex="0"><span></span><div class="ico"></div><h3>💸 No app, no sign up &amp; free</h3><p>No account needed, just snap, decorate and download. Completely free!</p></article>
+    <article class="step" tabindex="0"><span></span><div class="ico"></div><h3>🔒 Save privacy</h3><p>All photos are processed in your browser, so nothing is ever uploaded or stored on servers</p></article>
+    <article class="step" tabindex="0"><span></span><div class="ico"></div><h3>🌸 Make your own strip</h3><p>Choose your strip layout, frame shape, and color, then decorate with emojis</p></article>
+  </div>
+</section>
+
+<section class="view" id="view-tutorial" hidden>
+  <h1>How it Works?</h1>
+  <div class="steps">
+    <article class="step" tabindex="0"><span class="num">1</span><div class="ico">📷</div><h3>Turn on camera</h3><p>Klik <b>Nyalakan kamera</b>, lalu izinkan akses kamera di browser. Pilih filter, atur flash dan atur tingkat blur kamera.</p></article>
+    <article class="step" tabindex="0"><span class="num">3</span><div class="ico">⏱️</div><h3>Start snapping</h3><p>Klik <b>Mulai foto</b>. Ada hitung mundur 5 detik tiap foto, dan kamu bisa mengulang foto yang kurang bagus.</p></article>
+    <article class="step" tabindex="0"><span class="num">2</span><div class="ico">🎞️</div><h3>Choose strip</h3><p>Pilih bentuk strip (memanjang, 2 x 2, atau ke samping) dan bentuk frame foto.</p></article>
+    <article class="step" tabindex="0"><span class="num">4</span><div class="ico">💖</div><h3>Decorate your strip</h3><p>Buka <b>make your layout</b>: pilih warna bingkai, tulis teks di bawah strip, dan tambahkan emoji.</p></article>
+    <article class="step" tabindex="0"><span class="num">5</span><div class="ico">⬇️</div><h3>Download the result</h3><p>Klik <b>Download</b> dan hasil foto mu akan terunduh sebagai gambar PNG.</p></article>
+  </div>
+</section>
+
+<section class="view" id="view-snap" hidden>
+  <h1>Take snap!</h1>
+  <p class="lead">   </p>
+  <div class="top">
+    <div class="cam">
+      <video id="video" autoplay playsinline muted></video>
+      <video id="video2" class="soft" autoplay playsinline muted aria-hidden="true"></video>
+      <div class="flash" id="flash"></div>
+      <div class="status" id="status" hidden></div>
+      <div class="overlay" id="count" aria-live="assertive"></div>
+      <div class="msg" id="msg">Klik “Nyalakan kamera” lalu izinkan akses</div>
+      <div class="result" id="result" hidden>
+        <img id="resultImg" alt="Hasil foto">
+        <div class="bar">
+          <button class="btn alt" id="retake">Retake</button>
+          <button class="btn" id="next">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="panel">
+        <button class="btn full" id="startCam">Start camera</button>
+        <button class="btn full" id="shoot" hidden>Start</button>
+      </div>
+      <div class="panel flash-row">
+      <div>
+        <h3 style="margin:0">Flash <span id="flashLabel">Off</span></h3>
+      </div>
+      <button type="button" class="switch" id="flashSwitch" role="switch" aria-checked="false" aria-label="Flash">
+        <span class="knob"></span>
+      </button>
+    </div>
+      <div class="panel">
+        <h3>Filter</h3>
+        <div class="chips" id="filters"></div>
+      </div>
+      <div class="panel">
+        <h3><label for="smooth">Camera blur</label></h3>
+        <input type="range" id="smooth" min="0" max="100" value="40" style="width:100%">
+      </div>
+    </div>
+  </div>
+  <div class="row" style="justify-content:center;margin-top:24px">
+    <a class="btn" href="#layout">Next →</a>
+  </div>
+</section>
+
+<section class="view" id="view-layout" hidden>
+  <h1>Make your Strip</h1>
+  <p class="lead">Make it yours! Tap an emoji to add it, then drag it wherever you want.</p>
+  <h2>Choose your strip layout</h2>
+  <div class="opts" id="opts"></div>
+  <h2>Choose your frame shape</h2>
+  <div class="opts" id="shapes"></div>
+  <div class="stage">
+    <div class="strip"><canvas id="strip" aria-label="Hasil strip foto"></canvas></div>
+    <div>
+      <div class="panel">
+        <h2>Strip color</h2>
+        <div class="chips" id="frames"></div>
+        <h2 style="margin-top:14px"><label for="cap">Custom text</label></h2>
+        <input type="text" id="cap" maxlength="22" value="Custom strip">
+      </div>
+      <div class="panel">
+        <h3>Emoji | click emoji and drag</h3>
+        <div class="emos" id="emos"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="chip" id="undoEmo">Undo</button>
+          <button class="chip" id="clearEmo">Delete all</button>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" id="save" disabled>Download</button>
+        <button class="btn alt" id="reset" disabled>Take more photos</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+var FILTERS={"Natural glow":"brightness(1.08) contrast(.95) saturate(1.12) sepia(.05)","Normal":"none","BnW":"grayscale(1) contrast(1.1)","Old":"sepia(.7) contrast(1.1) saturate(1.2)","Contrast":"brightness(1.1) saturate(1.4)","Pink":"sepia(.3) hue-rotate(300deg) saturate(1.6)","Soft":"brightness(1.15) contrast(.88) saturate(1.05) sepia(.1) blur(.6px)","Korean glow":"brightness(1.18) contrast(.9) saturate(1.2) sepia(.12) hue-rotate(-10deg)"};
+var FRAMES=[
+  {c:"#ffffff",t:"#8F7073"},
+  {c:"#fff9d6",t:"#e4d593"},
+  {c:"#ffd3e6",t:"#9f6066"},
+  {c:"#ffced8",t:"#ac3b60"},
+  {c:"#c599b6",t:"#ffffff"},
+  {c:"#bd4444",t:"#55001C"},
+  {c:"#e4b2a7",t:"#ffffff"},
+  {c:"#d5e8e6",t:"#626879"},
+  {c:"#c8dfdb",t:"#5c677e"},
+  {c:"#c7d3c0",t:"#585757"},
+  {c:"#bfc6c4",t:"#ffffff"},
+  {c:"#555879",t:"#ffffff"},
+  {c:"#2b1a45",t:"#ffffff"},
+  {c:"#000000",t:"#ffffff"},
+  {c:"#ff2c2c",t:"#882d36"},
+  {c:"#adebb3",t:"#ffffff"},
+  {c:"#659287",t:"#ffffff"},
+  {c:"#a98b76",t:"#ffffff"},
+  {c:"#ffd3e6",pc:"#ff8fbf",p:"dots",t:"#2b1a45"},
+  {c:"#ffffff",pc:"#ffc2dd",p:"check",t:"#2b1a45"},
+  {c:"#cfe6ff",pc:"#ffffff",p:"stripes",t:"#2b1a45"},
+  {c:"#ffe3f0",pc:"#ff7fb0",p:"hearts",t:"#2b1a45"},
+  {c:"#2b1a45",pc:"#ffe27a",p:"stars",t:"#ffffff"},
+  {c:"#bd4444",pc:"#ffffff",p:"hearts",t:"#55001C"},
+  {c:"#ffffff",pc:"#ff8fbf",p:"gingham",t:"#2b1a45"},
+  {c:"#e8f7e4",pc:"#ff9ec7",p:"flowers",t:"#2b1a45"},
+  {c:"#e7defc",pc:"#b79cf5",p:"diamonds",t:"#2b1a45"}];
+var N=4,SECONDS=5,SW=640,SH=480;
+
+function mk(name,W,H,cw,ch,pos,cf,cy,df,dy){
+  return {name:name,W:W,H:H,cw:cw,ch:ch,cells:pos,cf:cf,cy:cy,df:df,dy:dy};
+}
+var LAYOUTS=[
+  mk("Vertical strip",540,1680,480,360,[0,1,2,3].map(function(i){return[30,30+i*390]}),44,1618,26,1656),
+  mk("2 x 2 grid",1000,750,455,295,[0,1,2,3].map(function(i){return[30+(i%2)*485,30+Math.floor(i/2)*325]}),38,698,22,730),
+  mk("Horizontal strip",1590,420,360,270,[0,1,2,3].map(function(i){return[30+i*390,30]}),44,358,26,396)
+];
+
+var $=function(id){return document.getElementById(id)};
+var video=$("video"),video2=$("video2"),smooth=$("smooth"),strip=$("strip"),ctx=strip.getContext("2d");
+var msg=$("msg"),count=$("count"),flash=$("flash"),statusEl=$("status");
+var result=$("result"),resultImg=$("resultImg"),nextBtn=$("next"),retakeBtn=$("retake");
+var shootBtn=$("shoot"),saveBtn=$("save"),resetBtn=$("reset"),camBtn=$("startCam"),cap=$("cap");
+var curFilter="Natural glow",curFrame=0,curLayout=0,shots=[],busy=false;
+
+function level(){return smooth.value/100*0.8}
+var autoB=1;
+function base(){
+  var f=FILTERS[curFilter],a=autoB>1.02?"brightness("+autoB.toFixed(2)+")":"";
+  return f==="none"?(a||"none"):(a?a+" ":"")+f;
+}
+function blurred(px){var f=base();return (f==="none"?"":f+" ")+"blur("+px+"px)"}
+function applyLook(){
+  video.style.filter=base();
+  video2.style.filter=blurred(2.5);
+  video2.style.opacity=level();
+}
+smooth.oninput=applyLook;
+
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+
+function cover(src,x,y,w,h){
+  var r=w/h,sw=src.width,sh=sw/r;
+  if(sh>src.height){sh=src.height;sw=sh*r}
+  ctx.drawImage(src,(src.width-sw)/2,(src.height-sh)/2,sw,sh,x,y,w,h);
+}
+
+var HEART_D="M.5 .92C.15 .64 0 .44 0 .27C0 .12 .12 .02 .26 .02C.38 .02 .46 .09 .5 .17C.54 .09 .62 .02 .74 .02C.88 .02 1 .12 1 .27C1 .44 .85 .64 .5 .92Z";
+var SHAPES=[{id:"rect",name:"Square"},{id:"heart",name:"Heart"},{id:"oval",name:"Oval"}];
+var curShape="rect";
+
+function drawCell(x,y,w,h,img){
+  var bx=x,by=y,bw=w,bh=h;
+  if(curShape==="heart"){bw=Math.min(w,h*1.1);bx=x+(w-bw)/2}
+  var p=new Path2D();
+  if(curShape==="oval"){p.ellipse(bx+bw/2,by+bh/2,bw/2,bh/2,0,0,Math.PI*2)}
+  else if(curShape==="heart"){p.addPath(new Path2D(HEART_D),new DOMMatrix([bw,0,0,bh,bx,by]))}
+  else{p.rect(bx,by,bw,bh)}
+  ctx.save();ctx.clip(p);
+  if(img){cover(img,bx,by,bw,bh)}
+  else{ctx.fillStyle="rgba(128,128,128,.25)";ctx.fillRect(bx,by,bw,bh)}
+  ctx.restore();
+}
+
+function paintBg(g,W,H,f,s){
+  g.fillStyle=f.c;g.fillRect(0,0,W,H);
+  if(!f.p)return;
+  var glyph={hearts:"♥",stars:"★",flowers:"✿"}[f.p];
+  g.fillStyle=f.pc;g.textAlign="center";g.textBaseline="middle";
+  g.font=Math.round(s*.95)+"px 'Segoe UI Symbol',Arial,sans-serif";
+  for(var j=0;j*s<H;j++){for(var i=0;i*s<W;i++){
+    var x=i*s,y=j*s,on=(i+j)%2===0;
+    if(f.p==="dots"){g.beginPath();g.arc(x+s/2,y+s/2,s*.2,0,6.3);g.fill()}
+    else if(f.p==="check"){if(on)g.fillRect(x,y,s,s)}
+    else if(f.p==="stripes"){if(i%2===0)g.fillRect(x,y,s,s)}
+    else if(f.p==="gingham"){g.globalAlpha=.45;if(i%2===0)g.fillRect(x,y,s,s);if(j%2===0)g.fillRect(x,y,s,s);g.globalAlpha=1}
+    else if(f.p==="diamonds"){g.beginPath();g.moveTo(x+s/2,y+s*.1);g.lineTo(x+s*.9,y+s/2);g.lineTo(x+s/2,y+s*.9);g.lineTo(x+s*.1,y+s/2);g.closePath();g.fill()}
+    else if(on){g.fillText(glyph,x+s/2,y+s/2)}
+  }}
+  g.textBaseline="alphabetic";
+}
+
+function draw(){drawTo(strip)}
+function drawTo(cv){
+  ctx=cv.getContext("2d");
+  var L=LAYOUTS[curLayout],f=FRAMES[curFrame];
+  cv.width=L.W;cv.height=L.H;
+  paintBg(ctx,L.W,L.H,f,Math.round(Math.min(L.W,L.H)/20));
+  for(var i=0;i<N;i++){
+    var p=L.cells[i];
+    drawCell(p[0],p[1],L.cw,L.ch,shots[i]);
+  }
+  if(f.p){ctx.fillStyle=f.c;ctx.globalAlpha=.9;var py=L.cy-L.cf-8;ctx.fillRect(30,py,L.W-60,L.H-12-py);ctx.globalAlpha=1}
+  ctx.fillStyle=f.t;ctx.textAlign="center";
+  ctx.font="700 "+L.cf+"px Fredoka, sans-serif";
+  ctx.fillText(cap.value||"photobooth",L.W/2,L.cy);
+  ctx.font="400 "+L.df+"px Fredoka, sans-serif";
+  ctx.font=Math.round(Math.min(L.W,L.H)*0.16)+"px 'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif";
+  ctx.textAlign="center";ctx.textBaseline="middle";
+  STK.forEach(function(s){ctx.fillText(s.e,s.x*L.W,s.y*L.H)});
+  ctx.textBaseline="alphabetic";
+}
+
+function thumb(L){
+  var s='<svg viewBox="0 0 '+L.W+' '+L.H+'" aria-hidden="true"><rect width="'+L.W+'" height="'+L.H+'" rx="20" fill="#fff" stroke="#2b1a45" stroke-width="24"/>';
+  L.cells.forEach(function(p){s+='<rect x="'+p[0]+'" y="'+p[1]+'" width="'+L.cw+'" height="'+L.ch+'" fill="#2b1a45" opacity=".35"/>'});
+  return s+'</svg>';
+}
+
+function press(box,btn){
+  Array.prototype.forEach.call(box.children,function(x){x.setAttribute("aria-pressed",false)});
+  btn.setAttribute("aria-pressed",true);
+}
+
+LAYOUTS.forEach(function(L,i){
+  var b=document.createElement("button");
+  b.className="opt";b.setAttribute("aria-pressed",i===0);
+  b.innerHTML=thumb(L)+"<span>"+L.name+"</span>";
+  b.onclick=function(){press($("opts"),b);curLayout=i;draw()};
+  $("opts").appendChild(b);
+});
+
+function shapeThumb(id){
+  var s='<svg viewBox="0 0 120 80" aria-hidden="true">',a='fill="#2b1a45" opacity=".35"';
+  if(id==="oval"){s+='<ellipse cx="60" cy="40" rx="48" ry="32" '+a+'/>'}
+  else if(id==="heart"){s+='<path d="'+HEART_D+'" transform="translate(30 4) scale(60 72)" '+a+'/>'}
+  else{s+='<rect x="12" y="8" width="96" height="64" '+a+'/>'}
+  return s+'</svg>';
+}
+SHAPES.forEach(function(sh,i){
+  var b=document.createElement("button");
+  b.className="opt";b.setAttribute("aria-pressed",i===0);
+  b.innerHTML=shapeThumb(sh.id)+"<span>"+sh.name+"</span>";
+  b.onclick=function(){press($("shapes"),b);curShape=sh.id;draw()};
+  $("shapes").appendChild(b);
+});
+
+Object.keys(FILTERS).forEach(function(k,i){
+  var b=document.createElement("button");
+  b.className="chip";b.textContent=k;b.setAttribute("aria-pressed",i===0);
+  b.onclick=function(){press($("filters"),b);curFilter=k;applyLook()};
+  $("filters").appendChild(b);
+});
+
+FRAMES.forEach(function(f,i){
+  var b=document.createElement("button");
+  b.className="sw";b.style.background=f.c;b.setAttribute("aria-label","Bingkai "+(i+1));b.setAttribute("aria-pressed",i===0);
+  b.onclick=function(){press($("frames"),b);curFrame=i;draw()};
+  $("frames").appendChild(b);
+});
+cap.oninput=draw;
+
+camBtn.onclick=function(){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){msg.textContent="Browser ini belum mendukung kamera. Coba Chrome atau Safari terbaru.";return}
+  navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:{ideal:1920},height:{ideal:1080},frameRate:{ideal:30}},audio:false}).then(function(s){
+    video.srcObject=s;video2.srcObject=s;
+    var t=s.getVideoTracks()[0];
+    if(t&&t.getCapabilities&&t.applyConstraints){
+      var caps=t.getCapabilities(),adv={};
+      ["focusMode","exposureMode","whiteBalanceMode"].forEach(function(k){
+        if(caps[k]&&caps[k].indexOf("continuous")>-1)adv[k]="continuous";
+      });
+      if(caps.exposureCompensation)adv.exposureCompensation=Math.min(caps.exposureCompensation.max,0.5);
+      t.applyConstraints({advanced:[adv]}).catch(function(){});
+    }
+    msg.hidden=true;camBtn.hidden=true;shootBtn.hidden=false;
+  }).catch(function(){
+    msg.hidden=false;msg.textContent="Kamera tidak bisa diakses. Klik ikon gembok di address bar, izinkan Kamera, lalu muat ulang halaman.";
+  });
+};
+
+function snap(){
+  var vw=video.videoWidth,vh=video.videoHeight,r=SW/SH,sw=vw,sh=vw/r;
+  if(sh>vh){sh=vh;sw=vh*r}
+  var c=document.createElement("canvas");c.width=SW;c.height=SH;
+  var x=c.getContext("2d");x.filter=base();
+  x.translate(SW,0);x.scale(-1,1);
+  x.drawImage(video,(vw-sw)/2,(vh-sh)/2,sw,sh,0,0,SW,SH);
+  if(level()>0){
+    x.globalAlpha=level();x.filter=blurred(3);
+    x.drawImage(video,(vw-sw)/2,(vh-sh)/2,sw,sh,0,0,SW,SH);
+    x.globalAlpha=1;
+  }
+  return c;
+}
+
+function review(c,i){
+  return new Promise(function(res){
+    resultImg.src=c.toDataURL("image/png");
+    nextBtn.textContent=(i===N-1)?"Selesai":"Lanjut ke foto berikutnya";
+    result.hidden=false;nextBtn.focus();
+    nextBtn.onclick=function(){result.hidden=true;res(true)};
+    retakeBtn.onclick=function(){result.hidden=true;res(false)};
+  });
+}
+
+var flashOn=false,FLASH_LEAD=120,FLASH_HOLD=60;  
+var screenFlash=$("screenFlash");
+$("flashSwitch").onclick=function(){
+  flashOn=!flashOn;
+  this.setAttribute("aria-checked",flashOn);
+  $("flashLabel").textContent=flashOn?"On":"Off";
+};
+async function shot(){
+  if(!flashOn)return snap();
+  screenFlash.hidden=false; 
+  await sleep(FLASH_LEAD);      
+  var c=snap();                 
+  await sleep(FLASH_HOLD);
+  screenFlash.hidden=true;     
+  return c;
+}
+shootBtn.onclick=async function(){
+  if(busy)return;busy=true;shots=[];draw();
+  shootBtn.disabled=true;saveBtn.disabled=true;resetBtn.disabled=true;
+  var i=0;
+  while(i<N){
+    statusEl.hidden=false;statusEl.textContent="Foto "+(i+1)+" dari "+N;
+    for(var n=SECONDS;n>0;n--){count.textContent=n;await sleep(1000)}
+    count.textContent="";
+    var c=await shot();
+    statusEl.hidden=true;
+    var keep=await review(c,i);
+    if(keep){shots.push(c);draw();i++}
+  }
+  busy=false;shootBtn.disabled=false;shootBtn.textContent="Foto lagi";
+  saveBtn.disabled=false;resetBtn.disabled=false;
+};
+
+resetBtn.onclick=function(){shots=[];draw();saveBtn.disabled=true;resetBtn.disabled=true;shootBtn.textContent="Mulai foto";location.hash="snap"};
+
+saveBtn.onclick=function(){
+  var a=document.createElement("a");
+  a.href=strip.toDataURL("image/png");a.download="photobooth.png";a.click();
+};
+
+var STK=[],drag=null;
+var EMOJIS=["❤️","💖","💕","✨","⭐","🌟","🎀","🌸","🌼","🌈","☁️","🦋","🍒","🍓","🍀","🐰","🐻","🐱","🐶","🐥","😎","🥰","😍","🤪","🎉","🎈","🎵","💋","🔥","💎","👑","👀","🤬","🙏","💬","💭","🎬","📸","🎥","⚠️","💢","💤","🎤","🗿","⁉️","🧸","🚫","🏴‍☠️","🎧","🎸","🥁","🤍","🤎","🧢","🐦","💕"];
+EMOJIS.forEach(function(e){
+  var b=document.createElement("button");b.className="emo";b.textContent=e;b.setAttribute("aria-label","Tambah emoji "+e);
+  b.onclick=function(){STK.push({e:e,x:.12+Math.random()*.76,y:.1+Math.random()*.8});draw()};
+  $("emos").appendChild(b);
+});
+$("undoEmo").onclick=function(){STK.pop();draw()};
+$("clearEmo").onclick=function(){STK.length=0;draw()};
+
+function relPos(e){var r=strip.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height}}
+strip.addEventListener("pointerdown",function(e){
+  var p=relPos(e),L=LAYOUTS[curLayout],best=null,bd=1e9,rad=Math.min(L.W,L.H)*0.12;
+  STK.forEach(function(s){var dx=(s.x-p.x)*L.W,dy=(s.y-p.y)*L.H,d=Math.sqrt(dx*dx+dy*dy);if(d<rad&&d<bd){bd=d;best=s}});
+  if(best){drag=best;strip.setPointerCapture(e.pointerId);e.preventDefault()}
+});
+strip.addEventListener("pointermove",function(e){
+  if(!drag)return;var p=relPos(e);
+  drag.x=Math.max(0,Math.min(1,p.x));drag.y=Math.max(0,Math.min(1,p.y));draw();
+});
+strip.addEventListener("pointerup",function(){drag=null});
+
+var VIEWS=["home","tutorial","snap","layout"];
+function route(){
+  var v=location.hash.slice(1);if(VIEWS.indexOf(v)<0)v="home";
+  VIEWS.forEach(function(n){$("view-"+n).hidden=(n!==v)});
+  Array.prototype.forEach.call(document.querySelectorAll("#menu a"),function(a){a.classList.toggle("active",a.getAttribute("data-view")===v)});
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+
+route();
+var probe=document.createElement("canvas");probe.width=32;probe.height=24;
+setInterval(function(){
+  if(!video.videoWidth)return;
+  var p=probe.getContext("2d",{willReadFrequently:true});
+  p.drawImage(video,0,0,32,24);
+  var d=p.getImageData(0,0,32,24).data,s=0;
+  for(var i=0;i<d.length;i+=4)s+=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+  var avg=s/(d.length/4);
+  var target=Math.max(1,Math.min(1.6,125/Math.max(avg,40)));
+  autoB+=(target-autoB)*0.3;
+  applyLook();
+},800);
+
+applyLook();
+draw();
+</script>
+</body>
+</html>

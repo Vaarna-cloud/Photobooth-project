@@ -17,7 +17,6 @@
       <li><a href="#tutorial" data-view="tutorial">tutorial</a></li>
       <li><a href="#snap" data-view="snap">take snap!</a></li>
       <li><a href="#layout" data-view="layout">make your layout</a></li>
-      <li><a href="#suggest" data-view="suggest">suggest</a></li>
     </ul>
   </nav>
 </header>
@@ -129,26 +128,38 @@
   </div>
 </section>
 
-<section class="view" id="view-suggest" hidden>
-  <h1>Suggest</h1>
-  <p class="lead">Ada fitur yang mau ditambahkan, atau ada yang kurang? Tulis saranmu di sini.</p>
-  <form id="sform" class="panel sform">
-    <label>Nama (boleh kosong)<input type="text" name="name" maxlength="60"></label>
-    <label>Email (kalau mau dibalas)<input type="email" name="email" maxlength="80"></label>
-    <label>Jenis masukan
-      <select name="type"><option>Tambah fitur</option><option>Ada yang kurang atau error</option><option>Tampilan</option><option>Lainnya</option></select>
-    </label>
-    <label>Saranmu<textarea name="message" rows="5" required maxlength="1000"></textarea></label>
-    <button class="btn" type="submit">Kirim saran</button>
-    <p id="sstatus" role="status"></p>
-  </form>
-</section>
-
 </main>
 
 <script>
 var FILTERS={"Natural glow":"brightness(1.08) contrast(.95) saturate(1.12) sepia(.05)","Normal":"none","BnW":"grayscale(1) contrast(1.1)","Old":"sepia(.7) contrast(1.1) saturate(1.2)","Contrast":"brightness(1.1) saturate(1.4)","Pink":"sepia(.3) hue-rotate(300deg) saturate(1.6)","Soft":"brightness(1.15) contrast(.88) saturate(1.05) sepia(.1) blur(.6px)","Korean glow":"brightness(1.18) contrast(.9) saturate(1.2) sepia(.12) hue-rotate(-10deg)"};
-var FRAMES=[{c:"#ffffff",t:"#8F7073"},{c:"#fff9d6",t:"#e4d593"},{c:"#ffd3e6",t:"#9f6066"},{c:"#ffced8",t:"#ac3b60"},{c:"#c599b6",t:"#ffffff"},{c:"#bd4444",t:"#55001C"},{c:"#e4b2a7",t:"#ffffff"},{c:"#d5e8e6",t:"#626879"},{c:"#c8dfdb",t:"#5c677e"},{c:"#c7d3c0",t:"#585757"},{c:"#bfc6c4",t:"#ffffff"},{c:"#555879",t:"#ffffff"},{c:"#2b1a45",t:"#ffffff"},{c:"#000000",t:"#ffffff"},{c:"#ff2c2c",t:"#882d36"},{c:"#adebb3",t:"#ffffff"},{c:"#659287",t:"#ffffff"},{c:"#a98b76",t:"#ffffff"}];
+var FRAMES=[
+  {c:"#ffffff",t:"#8F7073"},
+  {c:"#fff9d6",t:"#e4d593"},
+  {c:"#ffd3e6",t:"#9f6066"},
+  {c:"#ffced8",t:"#ac3b60"},
+  {c:"#c599b6",t:"#ffffff"},
+  {c:"#bd4444",t:"#55001C"},
+  {c:"#e4b2a7",t:"#ffffff"},
+  {c:"#d5e8e6",t:"#626879"},
+  {c:"#c8dfdb",t:"#5c677e"},
+  {c:"#c7d3c0",t:"#585757"},
+  {c:"#bfc6c4",t:"#ffffff"},
+  {c:"#555879",t:"#ffffff"},
+  {c:"#2b1a45",t:"#ffffff"},
+  {c:"#000000",t:"#ffffff"},
+  {c:"#ff2c2c",t:"#882d36"},
+  {c:"#adebb3",t:"#ffffff"},
+  {c:"#659287",t:"#ffffff"},
+  {c:"#a98b76",t:"#ffffff"},
+  {c:"#ffd3e6",pc:"#ff8fbf",p:"dots",t:"#2b1a45"},
+  {c:"#ffffff",pc:"#ffc2dd",p:"check",t:"#2b1a45"},
+  {c:"#cfe6ff",pc:"#ffffff",p:"stripes",t:"#2b1a45"},
+  {c:"#ffe3f0",pc:"#ff7fb0",p:"hearts",t:"#2b1a45"},
+  {c:"#2b1a45",pc:"#ffe27a",p:"stars",t:"#ffffff"},
+  {c:"#bd4444",pc:"#ffffff",p:"hearts",t:"#55001C"},
+  {c:"#ffffff",pc:"#ff8fbf",p:"gingham",t:"#2b1a45"},
+  {c:"#e8f7e4",pc:"#ff9ec7",p:"flowers",t:"#2b1a45"},
+  {c:"#e7defc",pc:"#b79cf5",p:"diamonds",t:"#2b1a45"}];
 var N=4,SECONDS=5,SW=640,SH=480;
 
 function mk(name,W,H,cw,ch,pos,cf,cy,df,dy){
@@ -206,16 +217,35 @@ function drawCell(x,y,w,h,img){
   ctx.restore();
 }
 
+function paintBg(g,W,H,f,s){
+  g.fillStyle=f.c;g.fillRect(0,0,W,H);
+  if(!f.p)return;
+  var glyph={hearts:"♥",stars:"★",flowers:"✿"}[f.p];
+  g.fillStyle=f.pc;g.textAlign="center";g.textBaseline="middle";
+  g.font=Math.round(s*.95)+"px 'Segoe UI Symbol',Arial,sans-serif";
+  for(var j=0;j*s<H;j++){for(var i=0;i*s<W;i++){
+    var x=i*s,y=j*s,on=(i+j)%2===0;
+    if(f.p==="dots"){g.beginPath();g.arc(x+s/2,y+s/2,s*.2,0,6.3);g.fill()}
+    else if(f.p==="check"){if(on)g.fillRect(x,y,s,s)}
+    else if(f.p==="stripes"){if(i%2===0)g.fillRect(x,y,s,s)}
+    else if(f.p==="gingham"){g.globalAlpha=.45;if(i%2===0)g.fillRect(x,y,s,s);if(j%2===0)g.fillRect(x,y,s,s);g.globalAlpha=1}
+    else if(f.p==="diamonds"){g.beginPath();g.moveTo(x+s/2,y+s*.1);g.lineTo(x+s*.9,y+s/2);g.lineTo(x+s/2,y+s*.9);g.lineTo(x+s*.1,y+s/2);g.closePath();g.fill()}
+    else if(on){g.fillText(glyph,x+s/2,y+s/2)}
+  }}
+  g.textBaseline="alphabetic";
+}
+
 function draw(){drawTo(strip)}
 function drawTo(cv){
   ctx=cv.getContext("2d");
   var L=LAYOUTS[curLayout],f=FRAMES[curFrame];
   cv.width=L.W;cv.height=L.H;
-  ctx.fillStyle=f.c;ctx.fillRect(0,0,L.W,L.H);
+  paintBg(ctx,L.W,L.H,f,Math.round(Math.min(L.W,L.H)/20));
   for(var i=0;i<N;i++){
     var p=L.cells[i];
     drawCell(p[0],p[1],L.cw,L.ch,shots[i]);
   }
+  if(f.p){ctx.fillStyle=f.c;ctx.globalAlpha=.9;var py=L.cy-L.cf-8;ctx.fillRect(30,py,L.W-60,L.H-12-py);ctx.globalAlpha=1}
   ctx.fillStyle=f.t;ctx.textAlign="center";
   ctx.font="700 "+L.cf+"px Fredoka, sans-serif";
   ctx.fillText(cap.value||"photobooth",L.W/2,L.cy);
@@ -381,7 +411,7 @@ strip.addEventListener("pointermove",function(e){
 });
 strip.addEventListener("pointerup",function(){drag=null});
 
-var VIEWS=["home","tutorial","snap","layout","suggest"];
+var VIEWS=["home","tutorial","snap","layout"];
 function route(){
   var v=location.hash.slice(1);if(VIEWS.indexOf(v)<0)v="home";
   VIEWS.forEach(function(n){$("view-"+n).hidden=(n!==v)});
@@ -389,22 +419,6 @@ function route(){
   window.scrollTo(0,0);
 }
 window.addEventListener("hashchange",route);
-
-var FORM_ENDPOINT="";                      
-var EMAIL="rraaiinbies@gmail.com";     
-$("sform").onsubmit=function(e){
-  e.preventDefault();
-  var f=$("sform"),d=new FormData(f),st=$("sstatus");
-  if(FORM_ENDPOINT){
-    fetch(FORM_ENDPOINT,{method:"POST",body:d,headers:{Accept:"application/json"}}).then(function(r){
-      if(!r.ok)throw 0;st.textContent="Terima kasih! Saranmu sudah terkirim.";f.reset();
-    }).catch(function(){st.textContent="Gagal terkirim. Coba lagi nanti."});
-  }else{
-    var body="Dari: "+(d.get("name")||"-")+"\nEmail: "+(d.get("email")||"-")+"\nJenis: "+d.get("type")+"\n\n"+d.get("message");
-    location.href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Saran Photobooth")+"&body="+encodeURIComponent(body);
-    st.textContent="Aplikasi emailmu akan terbuka. Tekan kirim di sana ya.";
-  }
-};
 
 route();
 var probe=document.createElement("canvas");probe.width=32;probe.height=24;
