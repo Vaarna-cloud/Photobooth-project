@@ -342,7 +342,7 @@ function snap(){
 function review(c,i){
   return new Promise(function(res){
     resultImg.src=c.toDataURL("image/png");
-    nextBtn.textContent=(i===N-1)?"Selesai":"Next";
+    nextBtn.textContent=(i===N-1)?"Done":"Next";
     result.hidden=false;nextBtn.focus();
     nextBtn.onclick=function(){result.hidden=true;res(true)};
     retakeBtn.onclick=function(){result.hidden=true;res(false)};
